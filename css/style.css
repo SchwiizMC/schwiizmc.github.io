@@ -1,0 +1,211 @@
+:root{
+  --font-display:"Courier New",ui-monospace,"Cascadia Mono","Segoe UI Mono",Menlo,Consolas,monospace;
+  --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,Helvetica,sans-serif;
+
+  --night:#0a1020; --panel:#16203a; --panel-hi:#1e2c4d; --line:#2a3a5e;
+  --gold:#f5c542; --diamond:#4fe3dc; --magenta:#c34ad6; --grass:#6bbf3a;
+  --text:#eef2fb; --muted:#9aa8c7; --redstone:#e0435a;
+
+  --board-top:3%;
+  --board-bottom:50%;   /* vorher 53% — Brett-Bereich nach unten erweitert */
+  --board-side:11%;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font-body);
+  background:var(--night); color:var(--text);
+  min-height:100svh; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ---------- Hintergrund ---------- */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+.bg::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(460px circle at 50% 6%,rgba(224,67,90,.12),transparent 55%),
+    radial-gradient(420px circle at 16% 26%,rgba(245,197,66,.09),transparent 60%),
+    radial-gradient(480px circle at 84% 30%,rgba(79,227,220,.09),transparent 60%),
+    radial-gradient(600px circle at 50% 100%,rgba(107,191,58,.06),transparent 55%);
+}
+.bg::after{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(79,227,220,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(79,227,220,.03) 1px,transparent 1px);
+  background-size:36px 36px;
+  -webkit-mask-image:radial-gradient(circle at 50% 40%,#000,transparent 80%);
+          mask-image:radial-gradient(circle at 50% 40%,#000,transparent 80%);
+}
+
+main{
+  position:relative;z-index:1;
+  width:100%;max-width:640px;margin:0 auto;
+  padding-bottom:clamp(28px,6vw,44px);
+}
+
+/* ---------- HERO / Logo ---------- */
+.hero{position:relative;padding:clamp(28px,7vw,48px) clamp(16px,5vw,22px) 8px;text-align:center}
+.logo-wrap{
+  position:relative;width:clamp(150px,52vw,220px);margin:0 auto 6px;
+  animation:bob 4.5s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.logo{
+  width:100%;height:auto;display:block;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.55)) drop-shadow(0 0 26px rgba(224,67,90,.35));
+}
+.logo-wrap::before{
+  content:"";position:absolute;inset:8% 8% 12%;z-index:-1;
+  background:radial-gradient(circle,rgba(224,67,90,.28),transparent 68%);filter:blur(8px);
+}
+
+.badges{display:flex;gap:8px;justify-content:center;margin:10px 0 4px;flex-wrap:wrap}
+.badge{
+  font-family:var(--font-display);font-size:clamp(9px,2.4vw,11px);font-weight:bold;
+  padding:7px 10px;background:rgba(10,16,32,.6);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border:2px solid rgba(245,197,66,.4);color:var(--text);letter-spacing:.5px;
+}
+.badge .dot{
+  display:inline-block;width:7px;height:7px;background:var(--gold);margin-right:6px;
+  box-shadow:0 0 8px var(--gold);animation:pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+.tagline{
+  font-size:clamp(14px,3.6vw,16px);font-weight:600;color:#dfe6f5;
+  max-width:380px;margin:12px auto 0;text-shadow:0 2px 8px rgba(0,0,0,.7);line-height:1.5;
+}
+
+/* ============================================================
+   SZENE — clippt alles, damit Skins nie aus dem Bild ragen
+   ============================================================ */
+.scene{
+  position:relative;
+  width:100%;
+  max-width:520px;           /* begrenzt Szenenbreite -> Skins skalieren mit */
+  margin:0 auto;
+  padding:0 clamp(8px,3vw,16px);
+  overflow:hidden;           /* HARTES Clipping: nichts ragt raus */
+}
+
+.sign-wrap{
+  position:relative;
+  width:100%;
+  max-width:420px;
+  margin:0 auto;
+  z-index:2;
+  overflow:hidden;                 /* schneidet den unten weggeclippten Stiel sauber ab */
+}
+.sign-img{
+  display:block;width:100%;height:500px;
+  image-rendering:pixelated;
+  filter:drop-shadow(0 10px 14px rgba(0,0,0,.5));
+  pointer-events:none;
+  margin-bottom:-14%;              /* zieht das Bild hoch -> kürzt den sichtbaren Stiel */
+}
+.sign-content{
+  position:absolute;
+  left:var(--board-side);
+  right:var(--board-side);
+  top:var(--board-top);
+  bottom:calc(100% - var(--board-bottom));
+  display:flex;flex-direction:column;
+  justify-content:center;
+  gap:clamp(4px,1.2vw,7px);        /* vorher clamp(5px,1.6vw,9px) — enger */
+}
+.sign-title{
+  font-family:var(--font-display);font-weight:bold;text-align:center;
+  font-size:clamp(11px,3.2vw,16px);
+  color:#3f2d18;letter-spacing:2px;
+  margin-bottom:clamp(2px,1vw,6px);
+  text-shadow:0 1px 0 rgba(255,255,255,.3);
+}
+.sign-title .pin{color:#7a2f1a}
+
+.links{display:flex;flex-direction:column;gap:clamp(5px,1.6vw,9px)}
+.link{
+  display:flex;align-items:center;gap:clamp(7px,2.4vw,12px);
+  padding:clamp(7px,2.2vw,11px) clamp(9px,2.6vw,13px);
+  background:linear-gradient(180deg,rgba(43,30,16,.86),rgba(30,20,10,.9));
+  border:2px solid rgba(20,13,6,.85);
+  border-radius:3px;
+  color:#f3e7d0;text-decoration:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 0 rgba(0,0,0,.35);
+  position:relative;overflow:hidden;
+  transition:transform .12s ease,box-shadow .12s ease,border-color .18s ease;
+}
+.link::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent,var(--diamond))}
+.link::after{
+  content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.10),transparent);
+  transition:left .5s ease;
+}
+.link:hover{
+  transform:translate(1px,-1px);border-color:var(--accent,var(--diamond));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 4px 0 rgba(0,0,0,.4);
+}
+.link:hover::after{left:120%}
+.link:active{transform:translate(0,1px)}
+.link:focus-visible{outline:3px solid var(--diamond);outline-offset:2px}
+
+.link-ico{
+  flex-shrink:0;
+  width:clamp(26px,7vw,36px);height:clamp(26px,7vw,36px);
+  display:grid;place-items:center;
+  background:rgba(10,16,32,.55);border:2px solid rgba(0,0,0,.5);border-radius:2px;
+}
+.link-ico svg{width:clamp(16px,4.4vw,22px);height:clamp(16px,4.4vw,22px)}
+.link-body{flex:1;min-width:0;text-align:left}
+.link-title{font-weight:700;font-size:clamp(13px,3.6vw,16px);line-height:1.15}
+.link-sub{font-size:clamp(10px,2.7vw,12px);color:#c9b58e;margin-top:1px}
+.link-arrow{flex-shrink:0;color:#c9b58e;transition:transform .18s ease,color .18s ease}
+.link:hover .link-arrow{transform:translateX(3px);color:var(--accent,var(--diamond))}
+
+/* ============================================================
+   SKINS — liegen VOR dem Schild (Vordergrund), immer voll sichtbar.
+   Sie überlappen die Schildkanten, werden aber von nichts verdeckt.
+   ============================================================ */
+.skin{
+  position:absolute;
+  z-index:5;                 /* VOR dem Schild und dem Link-Overlay */
+  pointer-events:none;
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.5));
+}
+/* Lehnender Skin: rechts, lehnt an die Schildkante (davor).
+   Mit Abstand vom Szenenrand -> auch die gedrehte Ecke bleibt im Bild. */
+.skin-lean{
+  width:clamp(72px,19vw,116px);
+  right:clamp(6px,3vw,20px);
+  top:clamp(30px,10vw,70px);
+  transform:rotate(6deg);transform-origin:bottom left;
+  animation:leanBob 5s ease-in-out infinite;
+}
+@keyframes leanBob{0%,100%{transform:rotate(6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-4px)}}
+
+/* Sitzender Skin: links, sitzt vorne an der unteren Schildkante */
+.skin-sit{
+  width:clamp(72px,19vw,116px);
+  left:clamp(4px,2vw,14px);
+  bottom:clamp(2px,3vw,24px);
+  animation:sitBob 6s ease-in-out infinite;
+}
+@keyframes sitBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+/* ---------- Footer ---------- */
+footer{
+  text-align:center;color:var(--muted);font-size:clamp(12px,3.2vw,13px);line-height:1.7;
+  margin-top:clamp(14px,4vw,26px);position:relative;z-index:4;
+}
+footer .heart{color:var(--redstone)}
+.footer-line{margin-top:6px}
+.footer-flag{font-size:18px}
+
+/* ---------- Bewegung reduzieren ---------- */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
