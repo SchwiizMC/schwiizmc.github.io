@@ -209,3 +209,34 @@ footer .heart{color:var(--redstone)}
   *{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
 }
+
+
+
+/* ---------- Countdown ---------- */
+.countdown{
+  margin:12px auto 0;max-width:340px;padding:10px 12px;
+  background:rgba(10,16,32,.6);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border:2px solid rgba(245,197,66,.4);text-align:center;
+}
+.cd-label{
+  font-family:var(--font-display);font-weight:bold;
+  font-size:clamp(9px,2.5vw,11px);letter-spacing:.5px;
+  color:var(--gold);text-shadow:0 2px 8px rgba(0,0,0,.7);
+}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.cd-unit{
+  background:rgba(22,32,58,.75);border:2px solid var(--line);
+  padding:6px 2px;display:flex;flex-direction:column;gap:2px;
+}
+.cd-num{
+  font-family:var(--font-display);font-weight:bold;
+  font-size:clamp(16px,5vw,22px);line-height:1;color:var(--text);
+  font-variant-numeric:tabular-nums;
+}
+.cd-cap{
+  font-family:var(--font-display);font-size:clamp(8px,2.2vw,10px);
+  color:var(--muted);letter-spacing:.5px;
+}
+.countdown.is-live{border-color:var(--grass)}
+.countdown.is-live .cd-label{color:var(--grass)}
