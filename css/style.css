@@ -164,8 +164,6 @@ main{
 .link-sub{font-size:clamp(10px,2.7vw,12px);color:#c9b58e;margin-top:1px}
 .link-arrow{flex-shrink:0;color:#c9b58e;transition:transform .18s ease,color .18s ease}
 .link:hover .link-arrow{transform:translateX(3px);color:var(--accent,var(--diamond))}
-.map-link{max-width:340px;margin:16px auto 8px}
-.map-link .link-title,.map-link .link-sub{display:block}
 
 /* ============================================================
    SKINS — liegen VOR dem Schild (Vordergrund), immer voll sichtbar.
@@ -211,3 +209,29 @@ footer .heart{color:var(--redstone)}
   *{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
 }
+
+/* Social links on a content-sized wooden board. */
+.scene{margin-top:14px}
+.sign-wrap{padding:18px clamp(16px,5vw,28px)}
+.sign-img{
+  position:absolute;inset:0 auto auto 0;
+  height:215.865%;margin-bottom:0;filter:none;
+}
+.sign-content{position:relative;inset:auto;display:block}
+.links{gap:9px}
+.link{min-height:62px;padding:10px 12px}
+.link-title,.link-sub{display:block}
+.link-sub{line-height:1.35;margin-top:3px;overflow-wrap:anywhere}
+.scene::after{
+  content:"";display:block;width:36px;height:48px;margin:0 auto;
+  background:url("../img/sign.webp") center bottom / 420px 449px;
+  image-rendering:pixelated;
+}
+
+.badge-map{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--gold);text-decoration:none;
+  transition:background .15s ease,border-color .15s ease;
+}
+.badge-map:hover{background:rgba(245,197,66,.12);border-color:var(--gold)}
+.badge-map:focus-visible{outline:3px solid var(--diamond);outline-offset:3px}
