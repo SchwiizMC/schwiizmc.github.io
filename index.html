@@ -11,7 +11,7 @@
 <meta property="og:image" content="img/logo.png">
 <meta name="theme-color" content="#0a1020">
 <link rel="icon" type="image/png" href="img/logo.png">
-<link rel="stylesheet" href="css/style.css?v=20261024-3">
+<link rel="stylesheet" href="css/style.css?v=20261113">
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
@@ -71,6 +71,18 @@
               </span>
               <svg class="link-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
             </a>
+
+            <label class="link link-upload" style="--accent:#f5c542">
+              <span class="link-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#f5c542" stroke-width="2.2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+              </span>
+              <span class="link-body">
+                <span class="link-title">Lade ein Foto hoch</span>
+                <span class="link-sub">🔒 Bleibt auf deinem Gerät, nichts wird hochgeladen</span>
+              </span>
+              <svg class="link-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+              <input type="file" accept="image/*" id="morph-file-main">
+            </label>
           </nav>
         </div>
       </div>
@@ -82,6 +94,25 @@
     </footer>
   </main>
 
+  <div id="morph-modal" hidden role="dialog" aria-modal="true" aria-labelledby="morph-title">
+    <div class="morph-card">
+      <button class="morph-close" id="morph-close" type="button" aria-label="Schließen">×</button>
+      <h2 id="morph-title">DEIN FOTO</h2>
+      <div class="morph-stage"><canvas id="morph-canvas" width="512" height="512"></canvas></div>
+      <div class="morph-progress" id="morph-progress" hidden><div id="morph-bar"></div></div>
+      <div class="morph-status" id="morph-status" aria-live="polite"></div>
+      <div class="morph-buttons">
+        <label class="morph-btn primary" id="morph-pick">📷 Foto auswählen<input type="file" accept="image/*" id="morph-file" hidden></label>
+        <button class="morph-btn" id="morph-replay" type="button" hidden>▶ Nochmal abspielen</button>
+        <button class="morph-btn primary" id="morph-save" type="button" hidden>⬇ Video speichern</button>
+        <button class="morph-btn" id="morph-share" type="button" hidden>📤 Teilen</button>
+      </div>
+      <p class="morph-note">Dein Foto bleibt auf deinem Gerät und wird nirgends hochgeladen.</p>
+    </div>
+  </div>
+
   <script src="js/script.js?v=20261024-3" defer></script>
+  <script src="js/mp4-muxer.min.js?v=20261113" defer></script>
+  <script src="js/morph.js?v=20261113" defer></script>
 </body>
 </html>
